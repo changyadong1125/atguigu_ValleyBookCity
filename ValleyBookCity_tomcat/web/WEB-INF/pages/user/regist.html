@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>尚硅谷会员注册页面</title>
+    <base th:href="@{/}" href="/atguigu_ValleyBookCity/ValleyBookCity_tomcat/web/">
+    <style type="text/css">
+        .login_form {
+            height: 420px;
+            margin-top: 25px;
+        }
+    </style>
+    <link rel="stylesheet" href="static/css/register.css">
+    <link rel="stylesheet" href="static/css/style.css">
+    <script src="static/Vue/Vue.js"></script>
+    <script src="static/Ajax/axios.js"></script>
+
+</head>
+<body>
+<div id="login_header">
+    <a href="index.html">
+        <img class="logo_img" alt="" src="static/img/logo.gif"/>
+    </a>
+</div>
+
+<div class="login_banner">
+    <div class="register_form">
+        <h1>注册尚硅谷会员</h1>
+        <form th:action="@{Servlet(method='register')}" method="post">
+            <!--        <form action="regist_success.html" >-->
+            <div class="form-item">
+                <div>
+                    <label>用户名称:</label>
+                    <input type="text" placeholder="请输入用户名" @blur="fun()" v-model="user.name" name="username">
+                </div>
+                <span class="errMess">{{span1}}</span>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>用户密码:</label>
+                    <input type="password" placeholder="请输入密码" @blur="fun02()" v-model="user.password"
+                           name="password"/>
+                </div>
+                <span class="errMess">{{span2}}</span>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>确认密码:</label>
+                    <input type="password" placeholder="请输入确认密码" @blur="fun03()" v-model="user.checkedPassword"/>
+                </div>
+                <span class="errMess">{{span3}}</span>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>用户邮箱:</label>
+                    <input type="text" placeholder="请输入邮箱" @blur="fun04()" v-model="user.emil" name="emile"/>
+                </div>
+                <span class="errMess">{{span4}}</span>
+            </div>
+
+            <div class="form-item">
+                <div>
+                    <label>验证码:</label>
+                    <div class="verify">
+                        <input type="text" placeholder="" name="code"/>
+                        <img :src="code" alt="" height="35px" width="100px" @click="funCode()"/>
+                    </div>
+                </div>
+                <span class="errMess">{{span5}}</span>
+            </div>
+            <button class="btn" @click="fun_end()">注册</button>
+        </form>
+    </div>
+</div>
+<div id="bottom">
+      <span>
+        尚硅谷书城.Copyright &copy;2015
+      </span>
+</div>
+<!--  我的代码-->
+<script>
+    new Vue({
+        el: ".login_banner",
+        data: {
+            code: "KaptchaServlet",
+            user: {
+                name: "[[${param.username}]]",
+                password: "[[${param.password}]]",
+                checkedPassword: "[[${param.password}]]",
+                emil: "[[${param.emile}]]",
+                code: "[[${param.code}]]"
+            },
+            //span1: "用户名应为6~16位数组和字母组成",
+            span1: "[[${param.username==null?'用户名应为6~16位数组和字母组成':'√'}]]",
+            //span1:'用户名应为6~16位数组和字母组成',
+            span2: "[[${param.password==null?'密码的长度至少为8位':'√'}]]",
+            span3: "[[${param.password==null?'确认密码':'√'}]]",
+            span4: "[[${param.emile==null?'请输入正确的邮箱格式':'√'}]]",
+            span5: "[[${errCode==null?'请输入验证码':errCode}]]"
+        },
+        methods: {
+            funCode: function () {
+                this.code = "KaptchaServlet?" + new Date();
+            },
+            fun: function () {
+                const reg = /^[a-zA-Z0-9^\u4e00-\u9fa5"]{2,16}$/
+                if (reg.test(this.user.name)) {
+                    axios({
+                        method: "post",
+                        url: "Servlet",
+                        params: {
+                            method: "checkUsername",
+                            username: this.user.name,
+                        }
+                    }).then(Response => {
+                        if (Response.data.flag){
+                           this.span1 = Response.data.message;
+                        }else{
+                            this.span1 = Response.data.resultData;
+                        }
+                    })
+                } else {
+                    if (this.user.name !== "") this.span1 = "用户名不符合要求"
+                    else this.span1 = "用户名应为6~16位数组和字母组成"
+                }
+            },
+            fun01: function () {
+                const reg = /^[a-zA-Z0-9]{6,16}$/;
+                console.log(reg.test(this.user.name));
+                if (reg.test(this.user.name)) {
+                    this.span1 = "√"
+                } else {
+                    if (this.user.name !== "") this.span1 = "用户名不符合要求"
+                    else this.span1 = "用户名应为6~16位数组和字母组成"
+                }
+            },
+            fun02: function () {
+                //密码的长度至少为8位
+                const reg = /^.{8,}$/;
+                console.log(reg.test(this.user.password));
+                if (reg.test(this.user.password)) {
+                    this.span2 = "√"
+                } else {
+                    if (this.user.password !== "")
+                        this.span2 = "密码不符合要求"
+                    else this.span2 = "密码的长度至少为8位"
+                }
+            },
+            fun03: function () {
+                //验证两次输入密码是否一致
+                if (this.user.checkedPassword !== "") {
+                    if (this.user.password === this.user.checkedPassword) {
+                        this.span3 = "√"
+                    } else {
+                        this.span3 = "两次密码不一致"
+                    }
+                } else {
+                    this.span3 = "确认密码"
+                }
+            },
+            fun04: function () {
+                //验证邮箱是否符合要求，符合要求的话打对勾
+                const reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+                console.log(reg.test(this.user.emil));
+                if (reg.test(this.user.emil)) {
+                    this.span4 = "√"
+                } else {
+                    if (this.user.emil !== "")
+                        this.span4 = "邮箱格式不符合要求"
+                    else this.span4 = "请输入正确的邮箱格式"
+                }
+            },
+            fun_end: function () {
+                if (this.span1 !== "√" || this.span2 !== "√" || this.span3 !== "√" || this.span4 !== "√") {
+                    event.preventDefault()
+                    alert("用户信息错误！请重新输入！")
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>

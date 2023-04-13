@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ValleyBookCity_tomcat/ValleyBookCity_tomcat.iml" filepath="$PROJECT_DIR$/ValleyBookCity_tomcat/ValleyBookCity_tomcat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/atguigu_ValleyBook City.iml" filepath="$PROJECT_DIR$/atguigu_ValleyBook City.iml" />
+    </modules>
+  </component>
+</project>

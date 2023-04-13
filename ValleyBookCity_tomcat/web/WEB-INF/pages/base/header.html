@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="header-right" th:fragment="header">
+  <a href="#" class="order">图书管理</a>
+  <a th:href="@{ServletBookManager(method='toOrder_manager')}" href="web/WEB-INF/pages/manager/order_manager.html"
+     class="destory">订单管理</a>
+  <a th:href="@{index.html}" href="index.html" class="gohome">返回商城</a>
+</div>
+</body>
+</html>

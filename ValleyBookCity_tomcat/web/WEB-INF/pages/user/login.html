@@ -1,0 +1,119 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org" xmlns:v-blind="http://www.w3.org/1999/xhtml"
+      xmlns:v-model="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>尚硅谷会员登录页面</title>
+    <base th:href="@{/}" href="/atguigu_ValleyBookCity/ValleyBookCity_tomcat/web/">
+    <link type="text/css" rel="stylesheet" href="static/css/style.css"/>
+    <script src="static/Vue/Vue.js"></script>
+</head>
+<body>
+<div id="login_header">
+    <a href="index.html">
+        <img class="logo_img" alt="" src="static/img/logo.gif"/>
+    </a>
+</div>
+<div class="login_banner">
+    <div id="l_content">
+        <span class="login_word"> <p>欢迎登陆</p></span>
+    </div>
+    <div id="content">
+        <div class="login_form">
+            <div class="login_box">
+                <div class="tit">
+                    <h1>尚硅谷会员</h1>
+                </div>
+                <div class="msg_cont" v-show="flag">
+                    <b></b>
+                    <span class="errorMsg">{{errorMsg}}</span>
+                </div>
+                <div class="form">
+                    <form th:action="@{Servlet(method=login)}" action="Servlet?method=login" method="post">
+                        <!--                    <form action="login_success.html">-->
+                        <label>用户名称：</label>
+                        <input
+                                class="itxt"
+                                type="text"
+                                placeholder="请输入用户名"
+                                autocomplete="off"
+                                tabindex="1"
+                                name="username"
+                                id="username"
+                                v-model="username"
+                                @blur="fun02()"
+                        />
+                        <br/>
+                        <br/>
+                        <label>用户密码：</label>
+                        <input
+                                class="itxt"
+                                type="password"
+                                placeholder="请输入密码"
+                                autocomplete="off"
+                                tabindex="1"
+                                name="password"
+                                id="password"
+                                v-model="password"
+                                @blur="fun02()"
+                        />
+                        <br/>
+
+                        <span th:if="${#strings.isEmpty(username)}"><input type="checkbox" value="true"
+                                                                           name="rememberUser">记住用户名和密码</span>
+                        <span th:if="${ not #strings.isEmpty(username)}"><input type="checkbox" value="true"
+                                                                                name="rememberUser" checked>记住用户名和密码</span>
+                        <br/>
+                        <input type="submit" value="登录" id="sub_btn" @click="fun01()"/>
+                    </form>
+                    <div class="tit">
+                        <a th:href="@{Servlet(method=toRegister)}" href="Servlet?method=toRegister">立即注册</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="bottom">
+      <span>
+        尚硅谷书城.Copyright &copy;2015
+      </span>
+</div>
+<!--加载Vue框架-->
+<script>
+    new Vue({
+        el: ".login_banner",
+        data: {
+            flag: true,
+            // errorMsg: "请输入用户名和密码",
+            errorMsg: "[[${errorMsg==null?'请输入用户名和密码':errorMsg}]]",
+            password: "[[${param.password==null?password:param.password}]]",
+            username: "[[${param.username==null?username:param.username}]]"
+        },
+        methods: {
+            fun01: function () {
+                if (this.username === "") {
+                    event.preventDefault()
+                    this.errorMsg = "用户名不能为空"
+                } else if (this.password === "") {
+                    event.preventDefault()
+                    this.errorMsg = "密码不能为空"
+                }
+            },
+            fun02: function () {
+                this.flag = true
+                if (this.username === "") {
+                    this.errorMsg = "用户名不能为空"
+                }
+                if (this.username !== "" && this.password === "") {
+                    this.errorMsg = "请输入密码"
+                }
+                if (this.username !== "" && this.password !== "") {
+                    this.flag = false
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>

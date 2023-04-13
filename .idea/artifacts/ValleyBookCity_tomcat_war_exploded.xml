@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="ValleyBookCity_tomcat:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/ValleyBookCity_tomcat_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="ValleyBookCity_tomcat" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="lib" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="ValleyBookCity_tomcat/web/Web" />
+    </root>
+  </artifact>
+</component>

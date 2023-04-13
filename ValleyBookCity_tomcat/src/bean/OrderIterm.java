@@ -1,0 +1,89 @@
+package bean;
+
+/**
+ * project:atguigu_ValleyBookCity
+ * package:bean
+ * class:OrderIterm
+ *
+ * @author: smile
+ * @create: 2023/3/28-16:47
+ * @Version: v1.0
+ * @Description:
+ */
+public class OrderIterm {
+    private Integer itemId;
+    private String bookName;
+    private Double price;
+    private String imgPath;
+    private Integer itemCount;
+    private Double itemAmount;
+    private Integer orderId;
+
+    public OrderIterm() {
+    }
+
+    public OrderIterm( String bookName, Double price, String imgPath, Integer itemCount, Double itemAmount, Integer orderId) {
+        this.bookName = bookName;
+        this.price = price;
+        this.imgPath = imgPath;
+        this.itemCount = itemCount;
+        this.itemAmount = itemAmount;
+        this.orderId = orderId;
+    }
+
+    public Integer getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Integer itemId) {
+        this.itemId = itemId;
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
+
+    public Integer getItemCount() {
+        return itemCount;
+    }
+
+    public void setItemCount(Integer itemCount) {
+        this.itemCount = itemCount;
+    }
+
+    public Double getItemAmount() {
+        return itemAmount;
+    }
+
+    public void setItemAmount(Double itemAmount) {
+        this.itemAmount = itemAmount;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+}
